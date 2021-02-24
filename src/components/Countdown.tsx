@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { ChallengesContext } from '../contexts/ChallengesContexts';
 import styles from '../styles/components/Countdown.module.css';
 
 let countdownTimeout: NodeJS.Timeout;
 
 export function Countdown() {
-    // 25
+    const { startNewChallenge } = useContext(ChallengesContext);
+
     const [time, setTime] = useState(0.1 * 60);
     const [isActive, setisActive] = useState(false);
     const [hasFinished, setHasFinished] = useState(false);
@@ -35,6 +37,7 @@ export function Countdown() {
         else if (isActive && time === 0) {
             setHasFinished(true);
             setisActive(false);
+            startNewChallenge();
         }
     }, [isActive, time]);
 
@@ -58,7 +61,7 @@ export function Countdown() {
                         disabled
                         className={styles.coutdownButton}
                     >
-                        The cicle has finished
+                        The coutdown has finished
                     </button>
                 ) :
                 (
